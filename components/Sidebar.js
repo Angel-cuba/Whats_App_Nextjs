@@ -12,7 +12,7 @@ import Chat from './Chat';
 function Sidebar() {
 	//To know is user authenticated
 	const [user] = useAuthState(auth);
-	console.log('avatar: ', user.photoURL);
+	// console.log('avatar: ', user.photoURL);
 	const userChatRef = db.collection('chats').where('users', 'array-contains', user.email);
 
 	const [chatSnapshot] = useCollection(userChatRef);
@@ -50,6 +50,7 @@ function Sidebar() {
 					</IconButton>
 				</IconsContainer>
 			</Header>
+
 			<Search>
 				<SearchIcon />
 				<SearchInput placeholder="Search in chats" color="primary" />
@@ -65,7 +66,21 @@ function Sidebar() {
 
 export default Sidebar;
 
-const Container = styled.div``;
+const Container = styled.div`
+	flex: 0.35;
+	border-right: 1px solid whitesmoke;
+	height: 100vh;
+	min-width: 300px;
+	max-width: 350px;
+	overflow-y: scroll;
+
+	::-webkit-scrollbar {
+		display: none;
+	}
+
+	-ms-overflow-style: none; /* IE and Edge */
+	scrollbar-width: none; /** Firefox */
+`;
 
 const Search = styled.div`
 	display: flex;
