@@ -9,17 +9,17 @@ import { useRouter } from 'next/router';
 
 function Chat({ id, users }) {
 	const router = useRouter();
-	console.log('id--->', id);
-	console.log('users--->', users);
+	// console.log('id--->', id);
+	// console.log('users--->', users);
 	const [user] = useAuthState(auth);
 	const [recipientSnapshot] = useCollection(
 		db.collection('users').where('email', '==', getRecipientEmail(users, user))
 	);
-	console.log('user-->', user);
+	// console.log('user-->', user);
 	const host = recipientSnapshot?.docs?.[0]?.data();
 	const recipientEmail = getRecipientEmail(users, user);
-	console.log('host-->', host);
-	console.log('recipientEmail---->', recipientEmail);
+	// console.log('host-->', host);
+	// console.log('recipientEmail---->', recipientEmail);
 
 	const enterChat = () => {
 		router.push(`/chat/${id}`);
