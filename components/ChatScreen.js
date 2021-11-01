@@ -14,6 +14,7 @@ import { getRecipientEmail } from '../util/getRecipientEmail';
 import Timeago from 'timeago-react';
 
 import { useRef, useState } from 'react';
+import { Circle } from 'better-react-spinkit';
 
 function ChatScreen({ chat, messages }) {
 	// console.log(chat);
