@@ -20,7 +20,7 @@ function Login() {
 				{/* 	<img src="/images/whatsapp.png" alt="" height={200} width={200} /> */}
 
 				<Button onClick={SignIn} variant="outlined">
-					Sign In with Google
+					Sign In with Google account
 				</Button>
 			</LoginContainer>
 		</Container>
