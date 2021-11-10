@@ -134,15 +134,14 @@ function ChatScreen({ chat, messages }) {
 			</Header>
 			<MessageContainer>
 				{/* Showing all messages */}
-				{loading ? (
-					<p> </p>
+				{/* {!loading ? (
+					<p> Is loading... </p>
 				) : (
-					<>
-						{' '}
-						{showMesagges()}
-						<EndOfMessage ref={endOfMessageRef} />
-					</>
-				)}
+					<> */}{' '}
+				{showMesagges()}
+				<EndOfMessage ref={endOfMessageRef} />
+				{/* </> */}
+				{/* )} */}
 			</MessageContainer>
 
 			<InputContainer>
