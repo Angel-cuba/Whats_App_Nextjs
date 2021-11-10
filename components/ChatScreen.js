@@ -28,7 +28,7 @@ function ChatScreen({ chat, messages }) {
 	//Router to define routes
 	const router = useRouter();
 	//Hook from firebase
-	const { messageSnapshot, loading } = useCollection(
+	const [messageSnapshot] = useCollection(
 		db.collection('chats').doc(router.query.id).collection('messages').orderBy('timestamp', 'asc')
 	);
 	const [lastMessageSnapshot] = useCollection(
