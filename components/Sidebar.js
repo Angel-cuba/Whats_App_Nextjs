@@ -8,6 +8,7 @@ import { auth, db } from '../firebaseConfig';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useCollection } from 'react-firebase-hooks/firestore';
 import Chat from './Chat';
+import { Logout } from '@mui/icons-material';
 
 function Sidebar() {
 	//To know is user authenticated
@@ -40,8 +41,10 @@ function Sidebar() {
 		<Container>
 			<div className="container">
 				<Header>
-					<UserAvatar src={user.photoURL} onClick={() => auth.signOut()} />
-
+					<div className="exit">
+						<Logout />
+						<UserAvatar src={user.photoURL} onClick={() => auth.signOut()} />
+					</div>
 					<IconsContainer>
 						<IconButton>
 							<ChatIcon />
@@ -51,13 +54,14 @@ function Sidebar() {
 						</IconButton>
 					</IconsContainer>
 				</Header>
+				<div className="search">
+					<Search>
+						<SearchIcon />
+						<SearchInput placeholder="Search in chats" color="primary" />
+					</Search>
+				</div>
 
-				<Search>
-					<SearchIcon />
-					<SearchInput placeholder="Search in chats" color="primary" />
-				</Search>
-
-				<SideBarButton onClick={createChat}>Start a new chat</SideBarButton>
+				<SideBarButton onClick={createChat}>New chat</SideBarButton>
 				{chatSnapshot?.docs.map((chat) => (
 					<Chat key={chat.id} id={chat.id} users={chat.data().users} />
 				))}
@@ -69,31 +73,54 @@ function Sidebar() {
 export default Sidebar;
 
 const media = {
-	desktop: `@media(max-width:500px)`,
+	mobile: `@media(max-width:600px)`,
+	between: `@media(max-width:500px)`,
+	ipad: `@media(max-width:740px)`,
 };
 
 const Container = styled.div`
 	border-right: 1px solid whitesmoke;
 	height: 100vh;
+	/* background-color: #e5ded8; */
 
 	overflow-y: scroll;
 	.container {
 		flex: 0.35;
+		height: 100%;
 
 		min-width: 300px;
 		max-width: 350px;
 	}
+	.exit {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: space-between;
+		top: 0;
+		${media.mobile} {
+			flex-direction: column;
+		}
+	}
 	::-webkit-scrollbar {
 		display: none;
 	}
+	${media.ipad} {
+		.container {
+			flex: 0.2;
+			min-width: 250px;
+			max-width: 300px;
+			height: fit-content;
+			margin-top: 20px;
+		}
+		.search {
+			display: none;
+		}
+	}
 
-	${media.desktop} {
+	${media.mobile} {
 		.container {
 			flex: 0.15;
-
-			background-color: red;
 			min-width: 50px;
-
 			max-width: 60px;
 		}
 	}
@@ -120,6 +147,9 @@ const SideBarButton = styled(Button)`
 	&&& {
 		border-top: 1px solid whitesmoke;
 		border-bottom: 1px solid whitesmoke;
+		background-color: rgba(0, 0, 0, 0.6);
+		color: silver;
+		font-weight: bold;
 	}
 	padding-top: 10px;
 	padding-bottom: 10px;
@@ -138,9 +168,9 @@ const Header = styled.div`
 `;
 
 const UserAvatar = styled(Avatar)`
-	margin: 10px;
+	margin: 20px;
 	cursor: pointer;
-	${media.desktop} {
+	${media.mobile} {
 		margin: 0;
 	}
 	:hover {

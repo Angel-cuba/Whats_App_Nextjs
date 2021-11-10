@@ -28,7 +28,7 @@ function ChatScreen({ chat, messages }) {
 	//Router to define routes
 	const router = useRouter();
 	//Hook from firebase
-	const [messageSnapshot] = useCollection(
+	const { messageSnapshot, loading } = useCollection(
 		db.collection('chats').doc(router.query.id).collection('messages').orderBy('timestamp', 'asc')
 	);
 	const [lastMessageSnapshot] = useCollection(
@@ -111,7 +111,7 @@ function ChatScreen({ chat, messages }) {
 					<h3>{recipientEmail}</h3>
 					{recipientSnapshot ? (
 						<p>
-							Last active:{' '}
+							<strong>Last time active:</strong>{' '}
 							{recipient?.lastSeen?.toDate() ? (
 								<Timeago datetime={recipientSnapshot?.docs?.[0]?.data()?.lastSeen?.toDate()} />
 							) : (
@@ -134,17 +134,24 @@ function ChatScreen({ chat, messages }) {
 			</Header>
 			<MessageContainer>
 				{/* Showing all messages */}
-				{showMesagges()}
-				<EndOfMessage ref={endOfMessageRef} />
+				{loading ? (
+					<p> </p>
+				) : (
+					<>
+						{' '}
+						{showMesagges()}
+						<EndOfMessage ref={endOfMessageRef} />
+					</>
+				)}
 			</MessageContainer>
 
 			<InputContainer>
-				<InsertEmoticon />
+				{/* <InsertEmoticon /> */}
 				<Input value={input} onChange={(e) => setInput(e.target.value)} />
 				<button hidden disable={!input} type="submit" onClick={sendMessage}>
 					Send message
 				</button>
-				<MicIcon />
+				{/* <MicIcon /> */}
 			</InputContainer>
 		</Container>
 	);
@@ -152,16 +159,32 @@ function ChatScreen({ chat, messages }) {
 
 export default ChatScreen;
 
-const Container = styled.div``;
+const media = {
+	mobile: `@media(max-width:600px)`,
+	small: `@media(max-width:500px)`,
+	ipad: `@media(max-width:740px)`,
+};
+
+const Container = styled.div`
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+`;
 
 const Header = styled.div`
 	position: sticky;
-	background-color: white;
+	background-color: #d3d3d3;
 	z-index: 100;
 	display: flex;
 	padding: 11px;
-	border-bottom: 1px solid whitesmoke;
+	border-bottom: 0.51px solid rgba(0, 0, 0, 0.18);
+	align-items: center;
 	top: 0;
+	${media.ipad} {
+		padding-top: 5px;
+		padding-bottom: 0px;
+	}
 `;
 
 const Input = styled.input`
@@ -180,17 +203,24 @@ const Input = styled.input`
 const HeaderInformation = styled.div`
 	margin-left: 15px;
 	flex: 1;
+	${media.mobile} {
+		margin-left: 5px;
+	}
 
 	> h3 {
 		margin-bottom: 3px;
 	}
 	> p {
 		font-size: 14px;
-		color: silver;
+		color: #000000;
 	}
 `;
 
-const HeaderIcon = styled.div``;
+const HeaderIcon = styled.div`
+	${media.ipad} {
+		display: none;
+	}
+`;
 
 const MessageContainer = styled.div`
 	padding: 30px;
@@ -203,9 +233,13 @@ const EndOfMessage = styled.div``;
 const InputContainer = styled.form`
 	display: flex;
 	align-items: center;
-	padding: 10px;
+	padding: 5px;
 	position: sticky;
 	bottom: 0;
-	background-color: whitesmoke;
+	background-color: #e5ded8;
+	border-radius: 1px solid silver;
 	z-index: 100;
+	${media.ipad} {
+		bottom: 10px;
+	}
 `;

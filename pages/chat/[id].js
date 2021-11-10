@@ -5,10 +5,11 @@ import ChatScreen from '../../components/ChatScreen';
 import { db, auth } from '../../firebaseConfig';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { getRecipientEmail } from '../../util/getRecipientEmail';
+import Loading from '../../components/Loading';
 
 function Chat({ chat, messages }) {
 	const [user] = useAuthState(auth);
-	console.log(user);
+	console.log('----->', user);
 	return (
 		<Container>
 			<Head>

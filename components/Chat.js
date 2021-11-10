@@ -44,7 +44,8 @@ function Chat({ id, users }) {
 
 export default Chat;
 const media = {
-	desktop: `@media(max-width:500px)`,
+	mobile: `@media(max-width:600px)`,
+	ipad: `@media(max-width:740px)`,
 };
 
 const Container = styled.div`
@@ -56,10 +57,15 @@ const Container = styled.div`
 	:hover {
 		background-color: #e9eaeb;
 	}
-	${media.desktop} {
+	${media.mobile} {
+		align-items: align-self;
+
 		p {
 			display: none;
 		}
+	}
+
+	${media.ipad} {
 	}
 `;
 
