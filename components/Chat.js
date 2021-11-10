@@ -43,6 +43,9 @@ function Chat({ id, users }) {
 }
 
 export default Chat;
+const media = {
+	desktop: `@media(max-width:500px)`,
+};
 
 const Container = styled.div`
 	display: flex;
@@ -52,6 +55,11 @@ const Container = styled.div`
 
 	:hover {
 		background-color: #e9eaeb;
+	}
+	${media.desktop} {
+		p {
+			display: none;
+		}
 	}
 `;
 

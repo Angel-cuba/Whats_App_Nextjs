@@ -38,44 +38,64 @@ function Sidebar() {
 
 	return (
 		<Container>
-			<Header>
-				<UserAvatar src={user.photoURL} onClick={() => auth.signOut()} />
+			<div className="container">
+				<Header>
+					<UserAvatar src={user.photoURL} onClick={() => auth.signOut()} />
 
-				<IconsContainer>
-					<IconButton>
-						<ChatIcon />
-					</IconButton>
-					<IconButton>
-						<MoreVertIcon />
-					</IconButton>
-				</IconsContainer>
-			</Header>
+					<IconsContainer>
+						<IconButton>
+							<ChatIcon />
+						</IconButton>
+						<IconButton>
+							<MoreVertIcon />
+						</IconButton>
+					</IconsContainer>
+				</Header>
 
-			<Search>
-				<SearchIcon />
-				<SearchInput placeholder="Search in chats" color="primary" />
-			</Search>
+				<Search>
+					<SearchIcon />
+					<SearchInput placeholder="Search in chats" color="primary" />
+				</Search>
 
-			<SideBarButton onClick={createChat}>Start a new chat</SideBarButton>
-			{chatSnapshot?.docs.map((chat) => (
-				<Chat key={chat.id} id={chat.id} users={chat.data().users} />
-			))}
+				<SideBarButton onClick={createChat}>Start a new chat</SideBarButton>
+				{chatSnapshot?.docs.map((chat) => (
+					<Chat key={chat.id} id={chat.id} users={chat.data().users} />
+				))}
+			</div>
 		</Container>
 	);
 }
 
 export default Sidebar;
 
+const media = {
+	desktop: `@media(max-width:500px)`,
+};
+
 const Container = styled.div`
-	flex: 0.35;
 	border-right: 1px solid whitesmoke;
 	height: 100vh;
-	min-width: 300px;
-	max-width: 350px;
-	overflow-y: scroll;
 
+	overflow-y: scroll;
+	.container {
+		flex: 0.35;
+
+		min-width: 300px;
+		max-width: 350px;
+	}
 	::-webkit-scrollbar {
 		display: none;
+	}
+
+	${media.desktop} {
+		.container {
+			flex: 0.15;
+
+			background-color: red;
+			min-width: 50px;
+
+			max-width: 60px;
+		}
 	}
 
 	-ms-overflow-style: none; /* IE and Edge */
@@ -120,6 +140,9 @@ const Header = styled.div`
 const UserAvatar = styled(Avatar)`
 	margin: 10px;
 	cursor: pointer;
+	${media.desktop} {
+		margin: 0;
+	}
 	:hover {
 		opacity: 0.8;
 	}
